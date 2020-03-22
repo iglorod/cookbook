@@ -1,0 +1,74 @@
+.recipeCreateContainer .recipeArea {
+    margin: 50px 0;
+    padding: 50px 0;
+    background: #f9f4f1;
+    border-radius: 5px;
+}
+
+.recipeCreateContainer .form-control {
+    border: none;
+    outline: none;
+    box-shadow: none !important;
+}
+
+.recipeCreateContainer h2, .recipeCreateContainer h4 {
+    font-family: 'Raleway', sans-serif;
+}
+
+.recipeCreateContainer .recipeChunk {
+    padding: 15px 0;
+}
+
+.recipeCreateContainer > .row > div[class^="col-"] {
+    padding: 0;
+}
+
+.recipeCreateContainer .input-group-text {
+    border: none;
+    background: #ffd0d0;
+}
+
+.manageItems {
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+}
+
+.manageItems .addItem {
+    color: green;
+    cursor: pointer;
+}
+
+.manageItems .addItem:hover {
+    opacity: .8;
+    transition: all .3s;
+}
+
+.manageItems .removeItem {
+    color: darkred;
+    cursor: pointer;
+}
+
+.recipeButton {
+    padding: 1.25rem;
+    text-align: center;
+    background: #cfffda;
+    cursor: pointer;
+    border-radius: .25rem;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.manageItems .removeItem:hover, .recipeButton:hover {
+    opacity: .8;
+    transition: all .3s;
+}
+
+.recipeChunk .list-group-item.list-item {
+    display: flex;
+    align-items: baseline;
+}
+
+.recipeArea .recipeCRU {
+    padding: 20px 0;
+    text-align: center;
+}

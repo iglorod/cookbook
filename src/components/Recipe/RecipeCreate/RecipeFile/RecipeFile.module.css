@@ -1,0 +1,16 @@
+.cardBody {
+    padding: 0;
+}
+
+.uploadBtn {
+    padding: 1.25rem;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+}
+
+.uploadBtn:hover {
+    background: rgb(248, 248, 248);
+    transition: all .3s;
+}
+
