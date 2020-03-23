@@ -7,11 +7,14 @@ import './Navigation.css';
 
 const Navigation = () => {
     return (
-        <Navbar collapseOnSelect className="shadow" expand="lg" bg="info" variant="light">
-            <NavigationBrand />
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <NavigationLinks />
-        </Navbar>
+        <>
+            <Navbar collapseOnSelect className="shadow" expand="lg" bg="info" variant="light" fixed="top">
+                <NavigationBrand />
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <NavigationLinks />
+            </Navbar>
+            <div className={'empty'}></div>
+        </>
     )
 }
 

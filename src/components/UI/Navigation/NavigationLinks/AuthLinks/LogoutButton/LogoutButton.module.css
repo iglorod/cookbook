@@ -1,0 +1,10 @@
+.logoutBtn {
+    color: rgba(252, 252, 252, 0.5);
+    display: block;
+    padding: .5rem 1rem;
+    cursor: pointer;
+}
+
+.logoutBtn:hover {
+    color: #ffffff;
+}

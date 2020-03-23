@@ -1,27 +1,32 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
+import axios from '../../../utility/axios-instance';
 import RecipeName from './RecipeName/RecipeName';
 import RecipeDescription from './RecipeDescription/RecipeDescription';
 import RecipeTimes from './RecipeTimes/RecipeTimes';
 import RecipeItemsList from './RecipeItemsList/RecipeItemsList';
 import RecipeFile from './RecipeFile/RecipeFile';
-import ColHOC from '../../utility/ColHOC/ColHOC';
+import AlertMessage from '../../UI/AlertMessage/AlertMessage';
+import ColHOC from '../../UI/ColHOC/ColHOC';
 import './RecipeCreate.css';
 
-const RecipeCreate = () => {
+const RecipeCreate = (props) => {
+    if (!props.userId) props.history.push('/sign-in');
+
     const [recipe, setRecipe] = useState({
         name: '',
         description: '',
         prepTime: '',
         cookTime: '',
         totalTime: '',
-        category: null,
-        cuisine: null,
         ingredients: [],
         instructions: [],
-        file: null,
+        image: null,
     })
+
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const onTextChangeHandler = (item, event) => {
         const newValue = event.target.value;
@@ -34,7 +39,7 @@ const RecipeCreate = () => {
     const onImageChangeHandler = (image) => {
         setRecipe(prevRecipe => ({
             ...prevRecipe,
-            file: image,
+            image,
         }))
     }
 
@@ -75,6 +80,25 @@ const RecipeCreate = () => {
         })
     }
 
+    const createRecipeHandler = () => {
+
+        let recipeData = new FormData();
+
+        recipeData.append('name', recipe.name);
+        recipeData.append('creatorId', props.userId);
+        recipeData.append('description', recipe.description);
+        recipeData.append('prepTime', recipe.prepTime);
+        recipeData.append('cookTime', recipe.cookTime);
+        recipeData.append('totalTime', recipe.totalTime);
+        recipeData.append('ingredients', recipe.ingredients);
+        recipeData.append('instructions', recipe.instructions);
+        recipeData.append('image', recipe.image, recipe.image.name);
+
+        axios.post('/recipe', recipeData)
+            .then(props.history.push(''))
+            .catch(error => setErrorMessage('Something went wrong...'))
+    }
+
     return (
         <Container className={'recipeCreateContainer'} fluid>
             <Row>
@@ -87,7 +111,7 @@ const RecipeCreate = () => {
 
                         <ColHOC>
                             <RecipeFile
-                                file={recipe.file}
+                                file={recipe.image}
                                 onChange={onImageChangeHandler} />
                         </ColHOC>
 
@@ -131,7 +155,14 @@ const RecipeCreate = () => {
                         </ColHOC>
 
                         <ColHOC>
-                            <div className={'recipeButton'}>Create Recipe</div>
+                            <AlertMessage errorMessage={errorMessage} />
+                        </ColHOC>
+
+                        <ColHOC>
+                            <div
+                                className={'recipeButton'}
+                                onClick={createRecipeHandler}
+                            >Create Recipe</div>
                         </ColHOC>
                     </Row>
                 </Col>
@@ -141,4 +172,16 @@ const RecipeCreate = () => {
     )
 }
 
-export default RecipeCreate;
+const mapStateToProps = (state) => {
+    return {
+        userId: state.auth.id,
+    }
+}
+
+const mapDispathToProps = () => {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispathToProps)(RecipeCreate);

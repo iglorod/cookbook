@@ -1,0 +1,12 @@
+.titleBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.titleText {
+    font-size: 28px;
+    font-family: 'Raleway', sans-serif;
+}

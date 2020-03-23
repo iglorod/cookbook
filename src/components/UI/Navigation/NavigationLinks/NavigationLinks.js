@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 
 import NavigationLink from './NavigationLink/NavigationLink';
-import LogoutButton from './LogoutButton/LogoutButton'; 
+import AuthLinks from './AuthLinks/AuthLinks'; 
 
 const NavigationLinks = () => {
     return (
@@ -13,7 +13,7 @@ const NavigationLinks = () => {
                 <NavigationLink to="/my-recipes">My recipes</NavigationLink>
                 <NavigationLink to="/create"><FontAwesomeIcon icon={faPlusSquare} /> Create recipe</NavigationLink>
             </Nav>
-            <LogoutButton />
+            <AuthLinks />
         </Navbar.Collapse>
     )
 }
