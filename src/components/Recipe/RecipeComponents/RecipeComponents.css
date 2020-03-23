@@ -1,29 +1,33 @@
-.recipeCreateContainer .recipeArea {
+.recipeContainer .recipeArea {
     margin: 20px 0;
     padding: 50px 0;
     background: #f9f4f1;
     border-radius: 5px;
 }
 
-.recipeCreateContainer .form-control {
+.recipeContainer .form-control {
     border: none;
     outline: none;
     box-shadow: none !important;
 }
 
-.recipeCreateContainer h2, .recipeCreateContainer h4 {
+.recipeContainer .form-control:read-only {
+    background: white;
+}
+
+.recipeContainer h2, .recipeContainer h3, .recipeContainer h4 {
     font-family: 'Raleway', sans-serif;
 }
 
-.recipeCreateContainer .recipeChunk {
+.recipeContainer .recipeChunk {
     padding: 15px 0;
 }
 
-.recipeCreateContainer > .row > div[class^="col-"] {
+.recipeContainer > .row > div[class^="col-"] {
     padding: 0;
 }
 
-.recipeCreateContainer .input-group-text {
+.recipeContainer .input-group-text {
     border: none;
     background: #ffd0d0;
 }
@@ -71,4 +75,21 @@
 .recipeArea .recipeCRU {
     padding: 20px 0;
     text-align: center;
+}
+
+.authorContainer {
+    color: #bfabab;
+    text-align: center;
+}
+
+.authorContainer .creationDate {
+    font-style: italic;
+}
+
+.authorContainer .author {
+    display: inline-block;
+}
+
+.authorContainer .author::first-letter {
+    text-transform: uppercase;
 }

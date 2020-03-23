@@ -3,14 +3,15 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import axios from '../../../utility/axios-instance';
-import RecipeName from './RecipeName/RecipeName';
-import RecipeDescription from './RecipeDescription/RecipeDescription';
-import RecipeTimes from './RecipeTimes/RecipeTimes';
-import RecipeItemsList from './RecipeItemsList/RecipeItemsList';
-import RecipeFile from './RecipeFile/RecipeFile';
+import RecipeName from '../RecipeComponents/RecipeName/RecipeName';
+import RecipeDescription from '../RecipeComponents/RecipeDescription/RecipeDescription';
+import RecipeTimes from '../RecipeComponents/RecipeTimes/RecipeTimes';
+import RecipeItemsList from '../RecipeComponents/RecipeItemsList/RecipeItemsList';
+import RecipeFile from '../RecipeComponents/RecipeFile/RecipeFile';
 import AlertMessage from '../../UI/AlertMessage/AlertMessage';
+import RecipeButton from '../RecipeComponents/RecipeButton/RecipeButton';
 import ColHOC from '../../UI/ColHOC/ColHOC';
-import './RecipeCreate.css';
+import '../RecipeComponents/RecipeComponents.css';
 
 const RecipeCreate = (props) => {
     if (!props.userId) props.history.push('/sign-in');
@@ -27,6 +28,7 @@ const RecipeCreate = (props) => {
     })
 
     const [errorMessage, setErrorMessage] = useState(null);
+    const [savingRecipe, setSavingRecipe] = useState(false);
 
     const onTextChangeHandler = (item, event) => {
         const newValue = event.target.value;
@@ -81,9 +83,13 @@ const RecipeCreate = (props) => {
     }
 
     const createRecipeHandler = () => {
+        setSavingRecipe(true);
 
         let recipeData = new FormData();
+        
+        const date = Math.floor((new Date().getTime() / 1000));
 
+        recipeData.append('date', date);
         recipeData.append('name', recipe.name);
         recipeData.append('creatorId', props.userId);
         recipeData.append('description', recipe.description);
@@ -95,12 +101,22 @@ const RecipeCreate = (props) => {
         recipeData.append('image', recipe.image, recipe.image.name);
 
         axios.post('/recipe', recipeData)
-            .then(props.history.push(''))
-            .catch(error => setErrorMessage('Something went wrong...'))
+            .then((recipe) => {
+                props.history.push({
+                    pathname: '/view',
+                    state: {
+                        recipeId: recipe.data._id,
+                    }
+                })
+            })
+            .catch(error => {
+                setSavingRecipe(false);
+                setErrorMessage('Something went wrong...')
+            })
     }
 
     return (
-        <Container className={'recipeCreateContainer'} fluid>
+        <Container className={'recipeContainer'} fluid>
             <Row>
                 <Col sm={2}></Col>
                 <Col sm={8}>
@@ -159,10 +175,10 @@ const RecipeCreate = (props) => {
                         </ColHOC>
 
                         <ColHOC>
-                            <div
-                                className={'recipeButton'}
-                                onClick={createRecipeHandler}
-                            >Create Recipe</div>
+                            <RecipeButton
+                                text={'Create Recipe'}
+                                loading={savingRecipe}
+                                onClick={createRecipeHandler} />
                         </ColHOC>
                     </Row>
                 </Col>
@@ -178,10 +194,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispathToProps = () => {
-    return {
-
-    }
-}
-
-export default connect(mapStateToProps, mapDispathToProps)(RecipeCreate);
+export default connect(mapStateToProps)(RecipeCreate);

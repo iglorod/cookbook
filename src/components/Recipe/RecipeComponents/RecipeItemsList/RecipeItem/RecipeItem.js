@@ -10,6 +10,7 @@ const RecipeItem = (props) => {
                 value={props.name}
                 onChange={props.onChange}
                 placeholder={`Type ${props.type.slice(0, -1)} here`}
+                readOnly={props.readOnly}
             ></input>
         </ListGroup.Item>
     )

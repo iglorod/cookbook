@@ -7,7 +7,10 @@ const RecipeTime = (props) => {
             <InputGroup.Prepend>
                 <InputGroup.Text>{props.text}</InputGroup.Text>
             </InputGroup.Prepend>
-            <FormControl value={props.time} onChange={props.onChange} />
+            <FormControl
+                value={props.time}
+                onChange={props.onChange}
+                readOnly={props.readOnly} />
         </>
     )
 }
