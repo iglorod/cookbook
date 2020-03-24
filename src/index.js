@@ -5,12 +5,14 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
 import authReducer from './store/reducers/authorization';
+import recipeReducer from './store/reducers/recipes';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const reducers = combineReducers({
   auth: authReducer,
+  rcp: recipeReducer,
 })
 
 const store = createStore(reducers, applyMiddleware(thunk));

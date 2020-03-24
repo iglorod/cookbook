@@ -1,0 +1,28 @@
+.recipeUrl {
+    text-decoration: none;
+    color: black !important;
+}
+
+.recipeName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.recipeDescription {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    text-align: justify;
+}
+
+.recipeAdditionalData {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #adadad;
+}
+

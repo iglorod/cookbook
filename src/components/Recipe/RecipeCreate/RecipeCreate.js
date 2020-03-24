@@ -14,8 +14,6 @@ import ColHOC from '../../UI/ColHOC/ColHOC';
 import '../RecipeComponents/RecipeComponents.css';
 
 const RecipeCreate = (props) => {
-    if (!props.userId) props.history.push('/sign-in');
-
     const [recipe, setRecipe] = useState({
         name: '',
         description: '',
@@ -29,6 +27,11 @@ const RecipeCreate = (props) => {
 
     const [errorMessage, setErrorMessage] = useState(null);
     const [savingRecipe, setSavingRecipe] = useState(false);
+
+    if (!props.userId) {
+        props.history.push('/sign-in');
+        return null;
+    }
 
     const onTextChangeHandler = (item, event) => {
         const newValue = event.target.value;
@@ -86,7 +89,7 @@ const RecipeCreate = (props) => {
         setSavingRecipe(true);
 
         let recipeData = new FormData();
-        
+
         const date = Math.floor((new Date().getTime() / 1000));
 
         recipeData.append('date', date);
