@@ -27,7 +27,7 @@ const RecipeView = (props) => {
         prev: null,
         ingredients: [],
         instructions: [],
-        image: null,
+        image: '',
         date: null,
     })
 

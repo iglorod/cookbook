@@ -28,7 +28,7 @@ const RecipeEdit = (props) => {
         totalTime: '',
         ingredients: [],
         instructions: [],
-        image: null,
+        image: '',
         date: null,
     })
 

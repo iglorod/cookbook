@@ -7,7 +7,7 @@ import { logoutActionCreator } from '../../../../../store/actions/authorization'
 import NavigationLink from '../NavigationLink/NavigationLink';
 import LogoutButton from './LogoutButton/LogoutButton';
 
-const AuthLinks = (props) => {
+export const AuthLinks = (props) => {
     if (props.userEmail) {
         return (
             <LogoutButton onClick={props.logout}>
