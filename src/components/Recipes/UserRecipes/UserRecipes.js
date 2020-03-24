@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { getRecipesCountAction, fetchRecipesAction } from '../../../store/actions/recipes';
 import RecipesList from '../RecipesList/RecipesList';
 import ModalSpinner from '../../UI/ModalSpinner/ModalSpinner';
 
 const UserRecipes = (props) => {
-    if (!props.userId) props.history.push('/sign-in');
-
     const [activePage, setActivePage] = useState(1);
 
     useEffect(() => {
@@ -20,6 +19,8 @@ const UserRecipes = (props) => {
         setActivePage(number);
     }
 
+    if (!props.userId) return <Redirect to='/sign-in' />;
+
     if (props.fetching) return <ModalSpinner />
 
     return (
@@ -27,6 +28,7 @@ const UserRecipes = (props) => {
             <RecipesList
                 recipes={props.recipes}
                 recipesCount={props.recipesCount}
+                pagination
                 step={6}
                 activePage={activePage}
                 paginationHandler={paginationHandler}

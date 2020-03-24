@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Form, Container, Row, Col } from 'react-bootstrap';
+
 
 import InputElement from '../AuthElements/InputElement/InputElement';
 import TitleElement from '../AuthElements/TitleElement/TitleElement';
@@ -13,8 +14,6 @@ import { validation } from '../../../utility/validation';
 import classes from './SignIn.module.css';
 
 const SignIn = (props) => {
-    if (props.email) props.history.push('/');
-
     const [rememberMe, setRememberMe] = useState(false);
 
     const [stateInputs, setStateInputs] = useState({
@@ -48,6 +47,10 @@ const SignIn = (props) => {
         },
     });
 
+
+    if (props.email) return <Redirect to='/' />
+
+    
     const rememberCheckboxHandler = () => {
         setRememberMe(prevState => {
             return !prevState

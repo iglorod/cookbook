@@ -23,6 +23,8 @@ const RecipeView = (props) => {
         prepTime: '',
         cookTime: '',
         totalTime: '',
+        next: null,
+        prev: null,
         ingredients: [],
         instructions: [],
         image: null,
@@ -44,6 +46,8 @@ const RecipeView = (props) => {
                     prepTime: recipe.data.prepTime,
                     cookTime: recipe.data.cookTime,
                     totalTime: recipe.data.totalTime,
+                    next: recipe.data.next,
+                    prev: recipe.data.prev,
                     ingredients: [...recipe.data.ingredients],
                     instructions: [...recipe.data.instructions],
                     image: recipe.data.image,
@@ -90,7 +94,9 @@ const RecipeView = (props) => {
                             <RecipeName name={recipe.name} readOnly />
                             <RecipeAuthor
                                 author={recipe.creatorId.email}
-                                date={recipe.date} />
+                                date={recipe.date}
+                                recipeId={recipe._id}
+                                versions={recipe.next || recipe.prev} />
                         </ColHOC>
 
                         <ColHOC>

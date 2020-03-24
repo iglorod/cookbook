@@ -36,8 +36,17 @@ export const fetchRecipesAction = (skip, limit, userId = null) => {
         dispatch(startLoadingActionCreator());
         axios.post(`/recipe/list?skip=${skip}&limit=${limit}`, { userId })
             .then(recipes => {
-                console.log(recipes);
                 dispatch(fetchRecipesActionCreator(recipes.data));
+            })
+    }
+}
+
+export const fetchRecipeVersionsAction = (recipeId) => {
+    return dispatch => {
+        dispatch(startLoadingActionCreator());
+        axios.get(`recipe/recipe-versions/${recipeId}`)
+            .then(recipes => {
+                dispatch(fetchRecipesActionCreator(recipes.data.reverse()));
             })
     }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Form, Container, Row, Col } from 'react-bootstrap';
 
 import axios from '../../../utility/axios-instance';
@@ -14,8 +14,6 @@ import { validation } from '../../../utility/validation';
 import classes from './SignUp.module.css';
 
 const SignUp = (props) => {
-    if (props.email) props.history.push('/');
-
     const [rememberMe, setRememberMe] = useState(false);
 
     const [emailIsCorrect, setEmailIsCorrect] = useState(false);
@@ -94,6 +92,10 @@ const SignUp = (props) => {
         }, 800);
         setEmailTimeoutId(timeoutId);
     }, [stateInputs.email.value]);
+
+
+    if (props.email) return <Redirect to='/' />
+
 
     const rememberCheckboxHandler = () => {
         setRememberMe(prevState => {

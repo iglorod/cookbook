@@ -25,6 +25,7 @@ const AllRecipes = (props) => {
             <RecipesList
                 recipes={props.recipes}
                 recipesCount={props.recipesCount}
+                pagination
                 step={6}
                 activePage={activePage}
                 paginationHandler={paginationHandler}

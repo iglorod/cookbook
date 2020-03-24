@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import axios from '../../../utility/axios-instance';
 import RecipeName from '../RecipeComponents/RecipeName/RecipeName';
@@ -22,16 +23,15 @@ const RecipeCreate = (props) => {
         totalTime: '',
         ingredients: [],
         instructions: [],
-        image: null,
+        image: '',
     })
 
     const [errorMessage, setErrorMessage] = useState(null);
     const [savingRecipe, setSavingRecipe] = useState(false);
 
-    if (!props.userId) {
-        props.history.push('/sign-in');
-        return null;
-    }
+
+    if (!props.userId) return <Redirect to={'/sign-in'} />
+
 
     const onTextChangeHandler = (item, event) => {
         const newValue = event.target.value;
@@ -85,9 +85,27 @@ const RecipeCreate = (props) => {
         })
     }
 
-    const createRecipeHandler = () => {
-        setSavingRecipe(true);
+    const validateRecipe = () => {
+        let isValid = true;
 
+        for (let key in recipe) {
+            if (key === 'image') isValid = typeof recipe[key] === 'object' && isValid;
+            else if (key === 'ingredients' || key === 'instructions') {
+                const arr = clearArray(recipe[key]);
+                isValid = arr.length > 0 && isValid;
+            } else {
+                isValid = recipe[key].length > 0 && isValid;
+            }
+        }
+
+        return isValid;
+    }
+
+    const clearArray = (arr) => {
+        return arr.filter(item => item.trim().length > 0);
+    }
+
+    const formRecipe = () => {
         let recipeData = new FormData();
 
         const date = Math.floor((new Date().getTime() / 1000));
@@ -99,9 +117,23 @@ const RecipeCreate = (props) => {
         recipeData.append('prepTime', recipe.prepTime);
         recipeData.append('cookTime', recipe.cookTime);
         recipeData.append('totalTime', recipe.totalTime);
-        recipeData.append('ingredients', recipe.ingredients);
-        recipeData.append('instructions', recipe.instructions);
+        recipeData.append('ingredients', clearArray(recipe.ingredients));
+        recipeData.append('instructions', clearArray(recipe.instructions));
         recipeData.append('image', recipe.image, recipe.image.name);
+
+        return recipeData;
+    }
+
+    const createRecipeHandler = () => {
+        if (!validateRecipe()) {
+            setErrorMessage('Please fill all fields & upload image');
+            return;
+        }
+
+        setSavingRecipe(true);
+        setErrorMessage(null);
+
+        const recipeData = formRecipe();
 
         axios.post('/recipe', recipeData)
             .then((recipe) => {

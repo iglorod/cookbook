@@ -11,6 +11,7 @@ import SignIn from '../Authorization/SignIn/SignIn';
 import SignUp from '../Authorization/SignUp/SignUp';
 import Navbar from '../UI/Navigation/Navigation';
 import ModalSpinner from '../UI/ModalSpinner/ModalSpinner';
+import RecipeVersions from '../Recipes/RecipeVersions/RecipeVersions';
 import { autoLogin } from '../../utility/auto-login';
 import { signInLocalAction, refreshTokenAction } from '../../store/actions/authorization';
 import { finishLoadingActionCreator } from '../../store/actions/authorization';
@@ -29,9 +30,10 @@ const Layout = (props) => {
                 <Route path={'/create'} component={RecipeCreate} exact />
                 <Route path={'/view'} component={RecipeView} exact />
                 <Route path={'/edit'} component={RecipeEdit} exact />
-                <Route path={'/my-recipes'} component={UserRecipes} exact />
                 <Route path={'/sign-in'} component={SignIn} exact />
                 <Route path={'/sign-up'} component={SignUp} exact />
+                <Route path={'/my-recipes'} component={UserRecipes} exact />
+                <Route path={'/recipe-versions'} component={RecipeVersions} exact />
                 <Route path={'/'} component={AllRecipes} />
             </Switch>
         </>

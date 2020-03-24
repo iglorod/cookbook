@@ -16,8 +16,6 @@ const reducer = (state = initialState, action) => {
         }
 
         case actionTypes.FETCH_RECIPES: {
-            
-            console.log(action.recipes)
             return {
                 ...state,
                 recipes: [...action.recipes],

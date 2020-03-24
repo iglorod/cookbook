@@ -8,7 +8,7 @@ import classes from './RecipeCard.module.css';
 
 const RecipeCard = (props) => {
     return (
-        <Card>
+        <Card className={props.original ? classes.orignalRecipe : null}>
             <Link to={{
                 pathname: '/view',
                 state: { recipeId: props.recipe._id }
@@ -32,10 +32,10 @@ const RecipeCard = (props) => {
                 <Card.Text className={classes.recipeDescription}>
                     {props.recipe.description}
                 </Card.Text>
-                <Card.Text className={classes.recipeAdditionalData}>
+                <Card.Body className={classes.recipeAdditionalData}>
                     <div><FontAwesomeIcon icon={faClock} /> {props.recipe.totalTime}</div>
                     {new Date(props.recipe.date * 1000).toLocaleString()}
-                </Card.Text>
+                </Card.Body>
             </Card.Body>
         </Card>
     )

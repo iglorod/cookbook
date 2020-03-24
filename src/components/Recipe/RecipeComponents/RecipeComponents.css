@@ -93,3 +93,9 @@
 .authorContainer .author::first-letter {
     text-transform: uppercase;
 }
+
+.authorContainer a {
+    color: #c53636 !important;
+    white-space: nowrap;
+    margin-left: 10px;
+}

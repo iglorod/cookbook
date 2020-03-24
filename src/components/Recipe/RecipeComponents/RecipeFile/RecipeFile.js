@@ -33,7 +33,7 @@ const RecipeFile = (props) => {
                 src={
                     isUrl(props.file)
                         ? props.file
-                        : props.file !== null
+                        : props.file !== ''
                             ? URL.createObjectURL(props.file)
                             : null
                 } />

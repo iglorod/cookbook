@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import axios from '../../../utility/axios-instance';
 import RecipeName from '../RecipeComponents/RecipeName/RecipeName';
@@ -17,8 +18,6 @@ import ColHOC from '../../UI/ColHOC/ColHOC';
 import '../RecipeComponents/RecipeComponents.css';
 
 const RecipeEdit = (props) => {
-    if (!props.userId) props.history.push('/sign-in');
-
     const [recipe, setRecipe] = useState({
         _id: null,
         name: '',
@@ -59,6 +58,9 @@ const RecipeEdit = (props) => {
                 setLoading(false);
             })
     }, [])
+
+    if (!props.userId) return <Redirect to={'/sign-in'} />
+
 
     if (loading || props.userId !== recipe.creatorId._id) return <ModalSpinner />;
 
