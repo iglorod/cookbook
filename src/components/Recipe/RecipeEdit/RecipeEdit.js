@@ -26,6 +26,8 @@ const RecipeEdit = (props) => {
         prepTime: '',
         cookTime: '',
         totalTime: '',
+        next: null,
+        prev: null,
         ingredients: [],
         instructions: [],
         image: '',
@@ -49,6 +51,8 @@ const RecipeEdit = (props) => {
                     prepTime: recipe.data.prepTime,
                     cookTime: recipe.data.cookTime,
                     totalTime: recipe.data.totalTime,
+                    next: recipe.data.next,
+                    prev: recipe.data.prev,
                     ingredients: [...recipe.data.ingredients],
                     instructions: [...recipe.data.instructions],
                     image: recipe.data.image,
@@ -116,9 +120,27 @@ const RecipeEdit = (props) => {
         })
     }
 
-    const updateRecipeHandler = () => {
-        setSavingRecipe(true);
+    const validateRecipe = () => {
+        let isValid = true;
 
+        for (let key in recipe) {
+            if (key === 'image' || key === 'prev' || key === 'next' || key === 'creatorId') continue;
+            else if (key === 'ingredients' || key === 'instructions') {
+                const arr = clearArray(recipe[key]);
+                isValid = arr.length > 0 && isValid;
+            } else {
+                isValid = recipe[key].length > 0 && isValid;
+            }
+        }
+
+        return isValid;
+    }
+
+    const clearArray = (arr) => {
+        return arr.filter(item => item.trim().length > 0);
+    }
+
+    const formRecipe = () => {
         let recipeData = new FormData();
 
         const date = Math.floor((new Date().getTime() / 1000));
@@ -131,11 +153,25 @@ const RecipeEdit = (props) => {
         recipeData.append('prepTime', recipe.prepTime);
         recipeData.append('cookTime', recipe.cookTime);
         recipeData.append('totalTime', recipe.totalTime);
-        recipeData.append('ingredients', recipe.ingredients);
-        recipeData.append('instructions', recipe.instructions);
+        recipeData.append('ingredients', clearArray(recipe.ingredients));
+        recipeData.append('instructions', clearArray(recipe.instructions));
         isUrl(recipe.image)
             ? recipeData.append('image', recipe.image)
             : recipeData.append('image', recipe.image, recipe.image.name);
+
+        return recipeData;
+    }
+
+    const updateRecipeHandler = () => {
+        if (!validateRecipe()) {
+            setErrorMessage('Please fill all fields');
+            return;
+        }
+
+        setSavingRecipe(true);
+        setErrorMessage(null);
+
+        const recipeData = formRecipe();
 
         axios.patch('/recipe', recipeData)
             .then((recipe) => {
@@ -171,7 +207,9 @@ const RecipeEdit = (props) => {
                         <ColHOC>
                             <RecipeAuthor
                                 author={recipe.creatorId.email}
-                                date={recipe.date} />
+                                date={recipe.date}
+                                recipeId={recipe._id}
+                                versions={recipe.next || recipe.prev} />
                             <RecipeName
                                 name={recipe.name}
                                 onChange={onTextChangeHandler} />

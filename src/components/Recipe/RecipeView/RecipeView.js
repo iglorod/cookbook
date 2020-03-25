@@ -70,7 +70,7 @@ const RecipeView = (props) => {
     if (loading) return <ModalSpinner />;
 
     let forward = null;
-    if (recipe.creatorId._id === props.userId) {
+    if (recipe.creatorId._id === props.userId && !recipe.next) {
         forward = (
             <ColHOC>
                 <RecipeButton
