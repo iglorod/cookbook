@@ -17,7 +17,7 @@ const RecipeButton = (props) => {
     return (
         <div
             className={'recipeButton'}
-            onClick={props.onClick}
+            onClick={props.loading ? null : props.onClick}
         >
             {props.text} {spinner}
         </div>

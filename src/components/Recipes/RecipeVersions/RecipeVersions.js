@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
@@ -8,12 +8,14 @@ import ModalSpinner from '../../UI/ModalSpinner/ModalSpinner';
 
 const RecipeVersions = (props) => {
     const recipeId = props.location.state.recipeId;
+    const [firstFetch, setFirstFetch] = useState(true);
 
     useEffect(() => {
         props.loadRecipeVersions(recipeId);
+        setFirstFetch(false);
     }, [])
 
-    if (props.fetching) return <ModalSpinner />
+    if (props.fetching || firstFetch) return <ModalSpinner />
 
     return (
         <Container>

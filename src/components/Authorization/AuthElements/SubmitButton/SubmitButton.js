@@ -23,7 +23,7 @@ const SubmitButton = (props) => {
             type="submit"
             className={classes.submitBtn}
             onClick={props.onClick}
-            disabled={props.disabled}>
+            disabled={props.startAuth || props.disabled}>
             {props.text} {spinner}
         </Button>
     )

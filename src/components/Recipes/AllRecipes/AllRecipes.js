@@ -8,17 +8,20 @@ import ModalSpinner from '../../UI/ModalSpinner/ModalSpinner';
 
 const AllRecipes = (props) => {
     const [activePage, setActivePage] = useState(1);
+    const [firstFetch, setFirstFetch] = useState(true);
 
     useEffect(() => {
         props.getRecipesCount();
         props.loadRecipes((activePage - 1) * 6, 6);
+        
+        setFirstFetch(false);
     }, [activePage])
 
     const paginationHandler = (number) => {
         setActivePage(number);
     }
 
-    if (props.fetching) return <ModalSpinner />
+    if (props.fetching || firstFetch) return <ModalSpinner />
 
     return (
         <Container>

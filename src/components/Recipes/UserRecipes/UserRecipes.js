@@ -9,10 +9,13 @@ import ModalSpinner from '../../UI/ModalSpinner/ModalSpinner';
 
 const UserRecipes = (props) => {
     const [activePage, setActivePage] = useState(1);
+    const [firstFetch, setFirstFetch] = useState(true);
 
     useEffect(() => {
         props.getRecipesCount(props.userId);
         props.loadRecipes((activePage - 1) * 6, 6, props.userId);
+
+        setFirstFetch(false);
     }, [activePage])
 
     const paginationHandler = (number) => {
@@ -21,7 +24,7 @@ const UserRecipes = (props) => {
 
     if (!props.userId) return <Redirect to='/sign-in' />;
 
-    if (props.fetching) return <ModalSpinner />
+    if (props.fetching || firstFetch) return <ModalSpinner />
 
     return (
         <Container>
