@@ -140,10 +140,16 @@ const RecipeEdit = (props) => {
         return arr.filter(item => item.trim().length > 0);
     }
 
+    const divideArray = (arr, divider) => {
+        const newArr = clearArray(arr);
+        return newArr.map((item, index) => (index + 1) !== newArr.length ? item + divider : item);
+    }
+
     const formRecipe = () => {
         let recipeData = new FormData();
 
         const date = Math.floor((new Date().getTime() / 1000));
+        const divider = '$$divider$$';
 
         recipeData.append('prevRecipeId', recipe._id);
         recipeData.append('date', date);
@@ -153,8 +159,10 @@ const RecipeEdit = (props) => {
         recipeData.append('prepTime', recipe.prepTime);
         recipeData.append('cookTime', recipe.cookTime);
         recipeData.append('totalTime', recipe.totalTime);
-        recipeData.append('ingredients', clearArray(recipe.ingredients));
-        recipeData.append('instructions', clearArray(recipe.instructions));
+        recipeData.append('ingredients', divideArray(recipe.ingredients, divider));
+        recipeData.append('instructions', divideArray(recipe.instructions, divider));
+        recipeData.append('divider', divider);
+
         isUrl(recipe.image)
             ? recipeData.append('image', recipe.image)
             : recipeData.append('image', recipe.image, recipe.image.name);
